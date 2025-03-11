@@ -1,0 +1,77 @@
+{
+  "name": "backend_boilerplate_typescripy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "directories": {
+    "test": "test"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma",
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "scripts": {
+    "test": "npm run build:ts && tsc -p test/tsconfig.json && tap --ts \"test/**/*.test.ts\"",
+    "start": "fastify start -a '0.0.0.0' -l info dist/app.js",
+    "build": "rm -rf dist && tsc && tsc-alias -p tsconfig.json",
+    "watch:ts": "tsc -w",
+    "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
+    "dev:local": "nodemon",
+    "dev:start": "fastify start  -a '0.0.0.0' --ignore-watch=.ts$ -w -l info -P dist/app.js",
+    "prepare": "husky install",
+    "model": "npx ts-node ./src/scripts/auto.ts",
+    "migrate": "npx prisma migrate deploy",
+    "seed": "npx prisma db seed",
+    "migrate:create": "npx prisma migrate dev --create-only"
+  },
+  "keywords": [
+    "fastify",
+    "sequelize",
+    "typescript"
+  ],
+  "author": "sandy",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/autoload": "^5.0.0",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/helmet": "^10.1.0",
+    "@fastify/multipart": "^9.0.3",
+    "@fastify/rate-limit": "^8.0.0",
+    "@fastify/sensible": "^5.0.0",
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.4.0",
+    "async": "^3.2.5",
+    "csv-parser": "^3.0.0",
+    "csv-write-stream": "^2.0.0",
+    "date-fns": "^3.6.0",
+    "dotenv": "^16.0.3",
+    "exceljs": "^4.4.0",
+    "fastify": "^4.0.0",
+    "fastify-cli": "^5.7.1",
+    "fastify-plugin": "^4.0.0",
+    "fastify-tsconfig": "^1.0.1",
+    "fluent-json-schema": "^4.2.1",
+    "husky": "^8.0.0",
+    "nodemon": "^3.1.0",
+    "pg": "^8.9.0",
+    "prisma": "^5.15.0",
+    "sequelize": "^6.29.0"
+  },
+  "devDependencies": {
+    "@types/async": "^3.2.24",
+    "@types/csv-write-stream": "^2.0.3",
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^18.0.0",
+    "@types/tap": "^15.0.5",
+    "@types/uuid": "^9.0.8",
+    "concurrently": "^7.0.0",
+    "dotenv": "^16.0.3",
+    "pretty-quick": "^3.1.3",
+    "sequelize-auto": "^0.8.8",
+    "tap": "^16.1.0",
+    "ts-node": "^10.4.0",
+    "tsc-alias": "^1.8.8",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^4.5.4"
+  }
+}
